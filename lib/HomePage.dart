@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:islamic/hadeth/HadethTab.dart';
+import 'package:islamic/quran/QuranTab.dart';
+import 'package:islamic/radio/RadioTab.dart';
+import 'package:islamic/sebha/SebhaTab.dart';
 
 import 'main.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const routeName = 'home';
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int CurrentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +27,28 @@ class HomePage extends StatelessWidget {
           fit: BoxFit.fill,
         ),
         Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
+              'Islamic',
+              style: TextStyle(
+                color: MyThemeData.colorBlack,
+              ),
+            ),
+            backgroundColor: Colors.transparent,
+          ),
           backgroundColor: Colors.transparent,
           bottomNavigationBar: Theme(
             data: Theme.of(context).copyWith(
               canvasColor: MyThemeData.primaryColor,
             ),
             child: BottomNavigationBar(
-              currentIndex: 0,
+              onTap: (index) {
+                CurrentPage = index;
+                setState(() {});
+              },
+              currentIndex: CurrentPage,
               selectedItemColor: MyThemeData.SelectedIconColor,
               unselectedItemColor: MyThemeData.UnSelectedIconColor,
               backgroundColor: MyThemeData.primaryColor,
@@ -45,8 +71,20 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
+          body: getCurrentPage(),
         ),
       ],
     );
+  }
+
+  Widget getCurrentPage() {
+    if (CurrentPage == 0) {
+      return QuranTab();
+    } else if (CurrentPage == 1) {
+      return HadethTab();
+    } else if (CurrentPage == 2) {
+      return SebhaTab();
+    } else
+      return RadioTab();
   }
 }
