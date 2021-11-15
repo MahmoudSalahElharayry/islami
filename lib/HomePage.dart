@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          body: getCurrentPage(),
+          body: Container(child: getCurrentPage()),
         ),
       ],
     );
